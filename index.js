@@ -1,6 +1,7 @@
 var request = require('request');
 var CoinKey = require('coinkey');
 var wait=require('wait.for');
+var sleep = require('sleep');
 var lineReader = require('line-reader');
 var keycandidate = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9","a","b","c","d","e","f"];
 var keyTemplate = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
@@ -66,6 +67,7 @@ lineReader.eachLine('randomnames.txt', function(line, last,cb) {
 		console.log("search:"+searchIndex  + " received:"+receiveIndex + " balanced:"+balanceIndex);
 		wait.for(InspectCoinKey,randomKey);
 		searchIndex++;
+		sleep.sleep(1);
 	}
 }
 
@@ -158,7 +160,7 @@ function CheckBalance(coinKey,callback)
 		if(body.includes("Code")||body.includes("head")||body.includes("status"))
 		{
 			console.log("[Pending]:"+coinkey.publicAddress);
-
+			sleep.sleep(1);
 			CheckBalance(coinkey,callback);
 		}
 		else
@@ -179,7 +181,7 @@ function CheckReceive(theCoinKey,callback)
 		if(body.includes("Code")||body.includes("head")||body.includes("status"))
 		{
 			console.log("[Pending]:"+theCoinKey.publicAddress);
-
+			sleep.sleep(1);
 			CheckReceive(theCoinKey,callback);
 		}
 		else
