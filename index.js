@@ -31,16 +31,16 @@ lineReader.eachLine('randomnames.txt', function(line, last,cb) {
 
 });*/
 
-	searchIndex = 0;
+	searchIndex = 1;
 	receiveIndex = 0;
 	balanceIndex = 0;
 	
 	while(true)
 	{
-		var randomKey = GenerateARandomCoinKey();
+		//var randomKey = GenerateARandomCoinKey();
 
 		
-		//var randomKey = CoinKey(new Buffer(pad(searchIndex,64), 'hex'));
+		var randomKey = CoinKey(new Buffer(pad(searchIndex,64), 'hex'));
 		//randomKey.compressed = false;
 		
 
@@ -64,10 +64,16 @@ lineReader.eachLine('randomnames.txt', function(line, last,cb) {
 			console.log(resultStr);	
 		}*/
 
-		console.log("search:"+searchIndex  + " received:"+receiveIndex + " balanced:"+balanceIndex);
+		console.log("search:"+(searchIndex*2-2)  + " received:"+receiveIndex + " balanced:"+balanceIndex);
 		wait.for(InspectCoinKey,randomKey);
-		searchIndex++;
 		sleep.sleep(1);
+
+		randomKey.compressed = true;
+		console.log("search:"+(searchIndex*2) + " received:"+receiveIndex+ " balanced:"+ balanceIndex);
+		wait.for(InspectCoinKey,randomKey);
+		sleep.sleep(1);
+
+		searchIndex++;
 	}
 }
 
@@ -159,9 +165,9 @@ function CheckBalance(coinKey,callback)
 
 		if(body.includes("Code")||body.includes("head")||body.includes("status"))
 		{
-			console.log("[Pending]:"+coinkey.publicAddress);
+			console.log("[Pending]:"+coinKey.publicAddress);
 			sleep.sleep(1);
-			CheckBalance(coinkey,callback);
+			CheckBalance(coinKey,callback);
 		}
 		else
 		{
