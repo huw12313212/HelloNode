@@ -41,7 +41,7 @@ lineReader.eachLine('randomnames.txt', function(line, last,cb) {
 
 		
 		var randomKey = CoinKey(new Buffer(pad(searchIndex,64), 'hex'));
-		//randomKey.compressed = false;
+		randomKey.compressed = false;
 		
 
 		/*
@@ -68,6 +68,7 @@ lineReader.eachLine('randomnames.txt', function(line, last,cb) {
 		wait.for(InspectCoinKey,randomKey);
 		sleep.sleep(1);
 
+		//randomKey = CoinKey(new Buffer(pad(searchIndex,64),'hex'));
 		randomKey.compressed = true;
 		console.log("search:"+(searchIndex*2) + " received:"+receiveIndex+ " balanced:"+ balanceIndex);
 		wait.for(InspectCoinKey,randomKey);
